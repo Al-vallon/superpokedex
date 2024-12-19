@@ -1,0 +1,51 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.db
+*.sqlite3
+
+# Django
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Environment and virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Django migrations
+migrations/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Local settings file
+local_settings.py
+
+# Database files
+*.sqlite3
+
+# Coverage reports
+.coverage
+*.cover
