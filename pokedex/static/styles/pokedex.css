@@ -1,0 +1,74 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #e0e0e0;
+  color: #000;
+}
+
+.title {
+  text-align: center;
+  color: #cc0000;
+  font-size: 2.5em;
+  text-shadow: 1px 1px #fff;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  list-style-type: none;
+}
+
+.pokemon-item {
+  margin: 10px 0;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #555;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pokemon-item:hover {
+  color: #cc0000;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagination-link {
+  margin: 0 5px;
+  padding: 10px 15px;
+  background-color: #cc0000;
+  color: white;
+  text-decoration: none;
+  border: 2px solid #333;
+  border-radius: 3px;
+}
+
+.pagination-link:hover {
+  background-color: #e60000;
+}
+
+.pagination-link[style*="display:none;"] {
+  display: none;
+}
+
+.list-item {
+  padding: 10px;
+}
+
+.pokemon-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.previous-link {
+  background-color: #007bff;
+}
+
+.next-link {
+  background-color: #28a745;
+}

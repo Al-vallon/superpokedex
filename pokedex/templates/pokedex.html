@@ -1,23 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pokedex</title>
     {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex</title>
-    <link rel="icon" href="{% static 'pokedex/favicon.ico' %}" type="image/x-icon">
-</head>
-<body>
-    <h1>Pokédex</h1>
+    <link rel="stylesheet" href="{% static 'styles/pokedex.css' %}" />
+  </head>
+  <body>
+    <h1 class="title">Pokédex</h1>
     <ul>
-        {% for pokemon in pokemons %}
-            <li>{{ pokemon.name }}</li>
-        {% endfor %}
+      {% for pokemon in pokemons %}
+      <li class="pokemon-item list-item">
+        <a href="/api/pokemons/{{ forloop.counter }}" class="pokemon-link"
+          >{{ pokemon.name }}</a
+        >
+      </li>
+      {% endfor %}
     </ul>
-    <ul>
-        {% for pokemon in pokemons.stats %}
-            <li>{{ stat.stat.name }} - {{stat.base.name}} </li>
-        {% endfor %}
-    </ul>
-</body>
+
+    <div class="pagination">
+      <a
+        class="pagination-link previous-link"
+        href="?offset={{ previous_offset }}&limit=20"
+        {%
+        if
+        not
+        previous_offset
+        %}style="display:none;"
+        {%
+        endif
+        %}
+        >Previous</a
+      >
+      <a
+        class="pagination-link next-link"
+        href="?offset={{ next_offset }}&limit=20"
+        {%
+        if
+        not
+        next_offset
+        %}style="display:none;"
+        {%
+        endif
+        %}
+        >Next</a
+      >
+    </div>
+  </body>
 </html>

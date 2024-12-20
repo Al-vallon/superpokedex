@@ -6,31 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Details</title>
     <link rel="icon" href="{% static 'pokedex/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'styles/pokemon.css' %}">
 </head>
-<body>
-    <h1>{{ pokemon.name }}</h1>
-    <p>ID: {{ pokemon.id }}</p>
-    <p>Height: {{ pokemon.height }}</p>
-    <p>Weight: {{ pokemon.weight }}</p>
-    <img src="{{ pokemon.sprites.front_default }}" alt="{{ pokemon.name }}">
-    <p>Types:
-        <ul>
+<body class="pokemon-body">
+    <h1 class="pokemon-name">{{ pokemon.name }}</h1>
+    <p class="pokemon-id">ID: {{ pokemon.id }}</p>
+    <p class="pokemon-height">Height: {{ pokemon.height }}</p>
+    <p class="pokemon-weight">Weight: {{ pokemon.weight }}</p>
+    <img class="pokemon-sprite" src="{{ pokemon.sprites.front_default }}" alt="{{ pokemon.name }}">
+    <p class="pokemon-types">Types:
+        <ul class="types-list">
             {% for type in pokemon.types %}
-                <li>{{ type.type.name }}</li>
+                <li class="type-item">{{ type.type.name }}</li>
             {% endfor %}
         </ul>
     </p>
-    <p>Abilities:
-        <ul>
+    <p class="pokemon-abilities">Abilities:
+        <ul class="abilities-list">
             {% for ability in pokemon.abilities %}
-                <li>{{ ability.ability.name }}</li>
+                <li class="ability-item">{{ ability.ability.name }}</li>
             {% endfor %}
         </ul>
     </p>
-    <p>Stats:
-        <ul>
+    <p class="pokemon-stats">Stats:
+        <ul class="stats-list">
             {% for stat in pokemon.stats %}
-                <li>{{ stat.stat.name }}: {{ stat.base_stat }}</li>
+                <li class="stat-item">{{ stat.stat.name }}: {{ stat.base_stat }}</li>
             {% endfor %}
         </ul>
     </p>
