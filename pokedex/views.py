@@ -30,7 +30,6 @@ def getAllPokemon(request):
     all_pokemons = data_all.get("results", [])
 
     return render(request, "pokedex.html", {
-        # 'all_pokemon_names' : all_pokemon_names,
         'all_pokemons': all_pokemons,
         "pokemons": pokemons,
         "next_offset": next_offset,
