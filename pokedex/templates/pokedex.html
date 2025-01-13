@@ -8,6 +8,26 @@
   </head>
   <body>
     <h1 class="title">Pokédex</h1>
+
+    <form method="get" action="/api/search_pokemon/">
+      <label for="pokemon-search">Search Pokémon:</label>
+      <input
+        type="text"
+        id="pokemon-search"
+        name="pokemon-name"
+        list="pokemon-names"
+        placeholder="Enter Pokémon name"
+      />
+      <datalist id="pokemon-names">
+        {% for pokemon in all_pokemons %}
+        <option value="{{ pokemon.name }}" data-name="{{ pokemon.name }}">
+          {{ pokemon.name }}
+        </option>
+        {% endfor %}
+      </datalist>
+      <button type="submit">Search</button>
+    </form>
+
     <ul>
       {% for pokemon in pokemons %}
       <li class="pokemon-item list-item">
