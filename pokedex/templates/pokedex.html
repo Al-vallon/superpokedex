@@ -11,7 +11,9 @@
     <ul>
       {% for pokemon in pokemons %}
       <li class="pokemon-item list-item">
-        <a href="/api/pokemons/{{ forloop.counter }}" class="pokemon-link"
+        <a
+          href="/api/pokemons/{{ forloop.counter|add:current_offset}}"
+          class="pokemon-link"
           >{{ pokemon.name }}</a
         >
       </li>

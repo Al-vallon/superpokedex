@@ -27,7 +27,9 @@ To run the Pokedex application locally, follow these steps:
 
    ```bash
    git clone https://github.com/your-username/pokedex.git
-  # Pokedex Application
+   ```
+
+# Pokedex Application
 
 ## Description
 
@@ -56,22 +58,20 @@ To run the Pokedex application locally, follow these steps:
 
    ```bash
    git clone https://github.com/your-username/pokedex.git
+   ```
+
 2. Build and run the Docker container:
 
 If you're using Docker Compose, you can build and run the container by executing:
 
-   docker-compose up --build
-   
+docker-compose up --build
+
 3. Access the application:
 
-Once the container is running, you can access the application by navigating to http://localhost:8000 in your web browser.
+Once the container is running, you can access the application by navigating to http://localhost:8000/api/pokemons in your web browser.
 
 4. Apply database migrations:
 
 If you're running the application for the first time, you need to apply the database migrations. You can do this by running the following command inside the Docker container:
 
 docker exec -it pokedex_container_name python manage.py migrate
-
-
-
-
