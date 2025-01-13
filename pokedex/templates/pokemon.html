@@ -10,6 +10,26 @@
 </head>
 <body class="pokemon-body">
     <h1 class="pokemon-name">{{ pokemon.name }}</h1>
+    <div style="display:flex;">
+        <a class="pagination-link previous-link"
+           href="/api/pokemons/{{ pokemon.id|add:-1 }}"
+           {% if pokemon.id > 1 %}
+             style="display:block;"
+           {% else %}
+             style="display:none;"
+           {% endif %}
+        >Previous</a>
+      
+        <a class="pagination-link next-link"
+           href="/api/pokemons/{{ pokemon.id|add:1 }}"
+           {% if pokemon.id < 151 %}
+             style="display:block;"
+           {% else %}
+             style="display:none;"
+           {% endif %}
+        >Next</a>
+      </div>
+      
     <p class="pokemon-id">ID: {{ pokemon.id }}</p>
     <p class="pokemon-height">Height: {{ pokemon.height }}</p>
     <p class="pokemon-weight">Weight: {{ pokemon.weight }}</p>

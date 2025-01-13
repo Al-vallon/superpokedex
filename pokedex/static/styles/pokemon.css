@@ -53,3 +53,26 @@
 .stat-item:hover {
   background-color: #e0e0e0;
 }
+
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagination-link {
+  margin: 0 5px;
+  padding: 10px 15px;
+  background-color: #487dc6;
+  color: white;
+  text-decoration: none;
+  border: 2px solid #333;
+  border-radius: 3px;
+}
+
+.pagination-link:hover {
+  background-color: #8cc1c6;
+}
+
+.pagination-link[style*="display:none;"] {
+  display: none;
+}
