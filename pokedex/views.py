@@ -20,18 +20,24 @@ def getAllPokemon(request):
     next_offset = data.get("next", "").split("offset=")[-1].split("&")[0] if data.get("next") else None
     previous_offset = data.get("previous", "").split("offset=")[-1].split("&")[0] if data.get("previous") else None
 
-    try:
-        response_all = requests.get(f"{API_URL}?limit=151")
-        response_all.raise_for_status()
-        data_all = response_all.json()
-    except requests.exceptions.RequestException:
-        return HttpResponse("Pokémons not found", status=404)
-
-    all_pokemons = data_all.get("results", [])
+    all_pokemons = []
+    for pokemon in pokemons:
+        pokemon_url = pokemon['url']
+        try:
+            response_pokemon = requests.get(pokemon_url)
+            response_pokemon.raise_for_status()
+            data_pokemon = response_pokemon.json()
+            name = data_pokemon['name']
+            image_url = data_pokemon['sprites']['front_default']
+            all_pokemons.append({
+                'name': name,
+                'image_url': image_url,
+            })
+        except requests.exceptions.RequestException:
+            continue  # Skip this Pokémon if there's an error
 
     return render(request, "pokedex.html", {
         'all_pokemons': all_pokemons,
-        "pokemons": pokemons,
         "next_offset": next_offset,
         "previous_offset": previous_offset,
         "current_offset": offset,
@@ -49,7 +55,6 @@ def getPokemonById(request, id):
 
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
-
 
 def searchPokemon(request):
     pokemon_name = request.GET.get("pokemon-name", "").strip()

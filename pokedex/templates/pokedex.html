@@ -37,15 +37,20 @@
       </datalist>
       <button type="submit">Search</button>
     </form>
-
-    <ul>
-      {% for pokemon in pokemons %}
-      <li class="pokemon-item list-item">
+    <ul class="pokemon-list">
+      {% for pokemon in all_pokemons %}
+      <li class="pokemon-item">
         <a
           href="/api/pokemons/{{ forloop.counter|add:current_offset}}"
           class="pokemon-link"
-          >{{ pokemon.name }}</a
         >
+          <img
+            src="{{ pokemon.image_url }}"
+            alt="{{ pokemon.name }}"
+            class="pokemon-image"
+          />
+          <span>{{ pokemon.name }}</span>
+        </a>
       </li>
       {% endfor %}
     </ul>

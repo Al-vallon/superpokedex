@@ -1,6 +1,8 @@
 body {
   font-family: "Poppins", sans-serif;
   background-color: whitesmoke;
+  max-width: 90%;
+  margin: 0 auto;
 }
 
 .navbar {
@@ -8,6 +10,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  margin-top: 20px;
   border: 2px solid #000;
   border-radius: 99px;
   background-color: #f43939;
@@ -44,24 +47,48 @@ body {
 
 ul {
   display: flex;
-  flex-direction: column;
   padding: 0;
   list-style-type: none;
 }
 
-.pokemon-item {
-  margin: 10px 0;
-  font-weight: bold;
-  font-size: 1.5em;
-  color: #555;
-  transition: color 0.3s;
+.pokemon-list {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  list-style-type: none;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.pokemon-item {
+  margin: 10px;
+  max-width: 150px;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #555;
+  transition: color 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  text-align: center;
 }
 
 .pokemon-item:hover {
   color: #f43939;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.pokemon-image {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px;
 }
 
 .pagination {
@@ -94,6 +121,9 @@ ul {
 .pokemon-link {
   text-decoration: none;
   color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .previous-link {
