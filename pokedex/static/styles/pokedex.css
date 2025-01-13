@@ -1,12 +1,43 @@
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #e0e0e0;
-  color: #000;
+  background-color: whitesmoke;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border: 2px solid #000;
+  border-radius: 99px;
+  background-color: #f43939;
+}
+
+.logo img {
+  height: 50px;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-button {
+  padding: 10px 15px;
+  background-color: white;
+  color: black;
+  text-decoration: none;
+  border-radius: 99px;
+  transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+  background-color: rgb(215, 215, 215);
 }
 
 .title {
   text-align: center;
-  color: #cc0000;
+  color: #f43939;
   font-size: 2.5em;
   text-shadow: 1px 1px #fff;
 }
@@ -30,7 +61,7 @@ ul {
 }
 
 .pokemon-item:hover {
-  color: #cc0000;
+  color: #f43939;
 }
 
 .pagination {
@@ -41,7 +72,7 @@ ul {
 .pagination-link {
   margin: 0 5px;
   padding: 10px 15px;
-  background-color: #cc0000;
+  background-color: #f43939;
   color: white;
   text-decoration: none;
   border: 2px solid #333;
@@ -49,7 +80,7 @@ ul {
 }
 
 .pagination-link:hover {
-  background-color: #e60000;
+  background-color: #f43939;
 }
 
 .pagination-link[style*="display:none;"] {

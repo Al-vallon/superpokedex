@@ -7,6 +7,16 @@
     <link rel="stylesheet" href="{% static 'styles/pokedex.css' %}" />
   </head>
   <body>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="/api/pokemons">
+          <img src="{% static 'pokedex/logo.png' %}" alt="Logo" />
+        </a>
+      </div>
+      <div class="nav-buttons">
+        <a href="/game" class="nav-button">Jouer dès maintenant</a>
+      </div>
+    </nav>
     <h1 class="title">Pokédex</h1>
 
     <form method="get" action="/api/search_pokemon/">
