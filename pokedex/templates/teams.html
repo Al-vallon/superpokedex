@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <title>Teams</title>
+    <link rel="stylesheet" href="/static/styles/teams.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="/api/pokemons">
+                    <img src="{% static 'pokedex/logo.png' %}" alt="Logo" />
+                </a>
+            </div>
+            <div class="nav-buttons">
+                <a href="/home" class="nav-button">Pokedex</a>
+                <a href="/game" class="nav-button">Jouer dès maintenant</a>
+            </div>
+            </nav>
+        <title>Teams</title>
+
+        <form method="POST" action="/teams" class="team-form">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Enter team name" required />
+            <button type="submit">Create Team</button>
+        </form>
+
+        <div class="teams-container">
+            {% for team in teams %}
+                <div class="team-card">
+                    <h2>{{ team.id }}</h2>
+                    <h2>{{ team.name }}</h2>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

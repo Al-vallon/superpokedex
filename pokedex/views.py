@@ -34,8 +34,7 @@ def getAllPokemon(request):
                 'image_url': image_url,
             })
         except requests.exceptions.RequestException:
-            continue  # Skip this Pokémon if there's an error
-
+            continue  
     return render(request, "pokedex.html", {
         'all_pokemons': all_pokemons,
         "next_offset": next_offset,
@@ -67,3 +66,16 @@ def searchPokemon(request):
     else:
         return HttpResponse("Pokémon not found", status=404)
 
+# def selectedPokemon(request):
+#     if request.method == "POST":
+#         pokemon_name = request.POST.get("pokemon-name", "").strip()
+#         url = f"{API_URL}{pokemon_name}"
+#         response = requests.get(url)
+#         if (response.status_code == 200):
+#             data = response.json()
+#             print(f"data: {data}")
+#             return render(request, "pokemon.html", {"pokemon": data})
+#         else:
+#             return HttpResponse("Pokémon not found", status=404)
+#     else:
+#         return redirect(reverse("pokedex:search_pokemon"))
