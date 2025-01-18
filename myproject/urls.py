@@ -18,12 +18,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
 from pokedex import homeview
+from pokedex import teamsview
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', homeview.home, name='home'),
-    path('api/', include('pokedex.urls'))
+    path('api/', include('pokedex.urls')),
+    path('teams', teamsview.manageTeam, name='manageTeam'),
+    # path('game', teamsview.manageTeam, name='manageTeam')
 ]
 
 handler404 = 'pokedex.views.custom_404'
