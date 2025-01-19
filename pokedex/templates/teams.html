@@ -118,8 +118,10 @@
         
             const teamId = document.getElementById('edit-team-id').value;
             const newName = document.getElementById('edit-team-name').value;
+
+            console.log(teamId, newName, 'teamId, newName');
         
-            fetch(`/teams/`, {
+            fetch(`/teams`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -128,52 +130,23 @@
                 body: JSON.stringify({ team_id: teamId, name: newName })
             })
             .then(response => {
-                if (response.ok) {
-                    alert("Team name updated successfully!");
-                    document.getElementById(`team-name-${teamId}`).textContent = newName;
-                    closeEditModal();
-                } else {
+                if (!response.ok) {
                     return response.json().then(data => {
-                        alert(data.message || "An error occurred.");
+                        throw new Error(data.message || "An unexpected error occurred.");
                     });
                 }
+                return response.json();
+            })
+            .then(data => {
+                alert(data.message);
+                closeEditModal();
+                window.location.reload(); // Recharge la page pour voir les changements
             })
             .catch(error => {
                 console.error("Error:", error);
-                alert("An unexpected error occurred.");
+                alert("An unexpected error occurred =D.");
             });
         }
-        
-        {% comment %} function updateTeamName(event) {
-            event.preventDefault();
-        
-            const teamId = document.getElementById('edit-team-id').value;
-            const newName = document.getElementById('edit-team-name').value;
-        
-            fetch(`/teams/`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-                },
-                body: JSON.stringify({ team_id: teamId, name: newName })
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert("Team name updated successfully!");
-                    document.getElementById(`team-name-${teamId}`).textContent = newName;
-                    closeEditModal();
-                } else {
-                    return response.json().then(data => {
-                        alert(data.message || "An error occurred.");
-                    });
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("An unexpected error occurred.");
-            });
-        } {% endcomment %}
     </script>
 </body>
 </html>
