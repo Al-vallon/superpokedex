@@ -27,6 +27,7 @@ urlpatterns = [
     path('', homeview.home, name='home'),
     path('api/', include('pokedex.urls')),
     path('teams', teamsview.manageTeam, name='manageTeam'),
+    
     # path('game', teamsview.manageTeam, name='manageTeam')
 ]
 
