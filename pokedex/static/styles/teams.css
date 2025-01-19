@@ -9,13 +9,45 @@ body {
     height: 100vh;
 }
 
+.btn{
+    padding: 10px 20px;
+    background-color: #f43939;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    color: #232323;
+    font-weight: bold;
+}
+
+.btn-edit{
+    padding: 10px 20px;
+    background-color: #127a12;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn-edit:hover {
+    color: #232323;
+    font-weight: bold;
+}
+
 .container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
 }
     
 .navbar {
@@ -37,6 +69,8 @@ body {
     display: flex;
     gap: 10px;
 }
+
+
 
 .nav-button {
     padding: 10px 15px;
@@ -62,7 +96,7 @@ body {
 .team-form {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin: 20px 0px;
 }
 
 .team-form input {
@@ -95,6 +129,13 @@ body {
     gap: 20px;
 }
 
+.title-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+}
+
 .team-card {
     display: flex;
     justify-content: space-around;
@@ -104,7 +145,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     flex: 1;
-    min-width: 200px;
+    min-width: 350px;
     text-align: center;
 }
 
@@ -132,4 +173,78 @@ body {
 .alert-error {
     background-color: #f8d7da;
     color: #721c24;
+}
+
+
+
+/* modal */
+
+.modal.hidden {
+    display: none;
+}
+
+#edit-form  {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn{
+    padding: 5px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: #f43939;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn-save{
+    margin-top: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: #127a12;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#edit-team-name{
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.modal {
+    display:block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.close-button {
+    float: right;
+    cursor: pointer;
+    font-size: 20px;
 }

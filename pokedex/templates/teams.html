@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="nav-buttons">
-                <a href="/home" class="nav-button">Pokedex</a>
+                <a href="/api/pokemons" class="nav-button">Pokedex</a>
                 <a href="/game" class="nav-button">Jouer dès maintenant</a>
             </div>
             </nav>
@@ -31,10 +31,29 @@
         <div class="teams-container">
             {% for team in teams %}
                 <div class="team-card">
-                    <h2>{{ team.id }}</h2>
-                    <h2>{{ team.name }}</h2>
+                    <div class="title-cards ">   
+                        <h2>{{ team.id }}</h2>
+                        <h2>{{ team.name }}</h2>
+                    </div>
+                    <div class="delete-button">
+                        {% csrf_token %}
+                        <button class="btn" onClick="deleteTeam({{ team.id }})">Delete</button>
+                        <button class="btn-edit" onClick="openEditModal({{ team.id }}, '{{ team.name }}')">Edit</button>
+                    </div>
                 </div>
             {% endfor %}
+        </div>
+
+        <div id="edit-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button" onClick="closeEditModal()">×</span>
+                <h2>Edit Team</h2>
+                <form id="edit-form" onsubmit="updateTeamName(event)">
+                    <input type="hidden" id="edit-team-id" name="team_id" />
+                    <input type="text" id="edit-team-name" name="name" required />
+                    <button class="btn-save" type="submit">Save Changes</button>
+                </form>
+            </div>
         </div>
 
         {% if messages %}
@@ -47,5 +66,114 @@
         </div>
         {% endif %}
     </div>
+
+    {% comment %} Script to delete a team  {% endcomment %}
+    <script>
+        function deleteTeam(id) {
+            if (!confirm("Are you sure you want to delete this team?")) {
+                return; 
+            }
+    
+            fetch(`/teams`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify({id: id}) ,
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Team deleted successfully!");
+                    window.location.reload(); 
+                } else {
+                    return response.json().then(data => {
+                        alert(data.message || "An error occurred while deleting the team.");
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An unexpected error occurred.");
+            });
+        }
+
+        function openEditModal(teamId, teamName) {
+            const modal = document.getElementById('edit-modal');
+            const inputId = document.getElementById('edit-team-id');
+            const inputName = document.getElementById('edit-team-name');
+
+            inputId.value = teamId;
+            inputName.value = teamName;
+            modal.classList.remove('hidden');
+        } 
+        
+        function closeEditModal() {
+            const modal = document.getElementById('edit-modal');
+            modal.classList.add('hidden');
+        } 
+
+        function updateTeamName(event) {
+            event.preventDefault();
+        
+            const teamId = document.getElementById('edit-team-id').value;
+            const newName = document.getElementById('edit-team-name').value;
+        
+            fetch(`/teams/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify({ team_id: teamId, name: newName })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Team name updated successfully!");
+                    document.getElementById(`team-name-${teamId}`).textContent = newName;
+                    closeEditModal();
+                } else {
+                    return response.json().then(data => {
+                        alert(data.message || "An error occurred.");
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An unexpected error occurred.");
+            });
+        }
+        
+        {% comment %} function updateTeamName(event) {
+            event.preventDefault();
+        
+            const teamId = document.getElementById('edit-team-id').value;
+            const newName = document.getElementById('edit-team-name').value;
+        
+            fetch(`/teams/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify({ team_id: teamId, name: newName })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Team name updated successfully!");
+                    document.getElementById(`team-name-${teamId}`).textContent = newName;
+                    closeEditModal();
+                } else {
+                    return response.json().then(data => {
+                        alert(data.message || "An error occurred.");
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An unexpected error occurred.");
+            });
+        } {% endcomment %}
+    </script>
 </body>
 </html>
