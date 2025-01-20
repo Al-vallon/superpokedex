@@ -59,23 +59,9 @@ def searchPokemon(request):
     pokemon_name = request.GET.get("pokemon-name", "").strip()
     url = f"{API_URL}{pokemon_name}"
     response = requests.get(url)
-    if (response.status_code == 200):
+    if response.status_code == 200:
         data = response.json()
         print(f"data: {data}")
         return render(request, "pokemon.html", {"pokemon": data})
     else:
         return HttpResponse("Pokémon not found", status=404)
-
-# def selectedPokemon(request):
-#     if request.method == "POST":
-#         pokemon_name = request.POST.get("pokemon-name", "").strip()
-#         url = f"{API_URL}{pokemon_name}"
-#         response = requests.get(url)
-#         if (response.status_code == 200):
-#             data = response.json()
-#             print(f"data: {data}")
-#             return render(request, "pokemon.html", {"pokemon": data})
-#         else:
-#             return HttpResponse("Pokémon not found", status=404)
-#     else:
-#         return redirect(reverse("pokedex:search_pokemon"))
