@@ -1,22 +1,66 @@
 import json
 from django.contrib import messages
 from django.shortcuts import render
-from pokedex.models.teams import Teams
+from pokedex.models import Teams
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
+import requests
+from pokedex.views import API_URL
+
 
 @csrf_exempt
 @require_http_methods(["GET", "POST", "PUT", "PATCH", "DELETE"])
 def manageTeam(request):
-    if request.method == 'GET':
+
+    try:
+        response = requests.get(f"{API_URL}?&limit=151")
+        response.raise_for_status()
+        data = response.json()
+    except requests.exceptions.RequestException:
+        return HttpResponse("Pokémons not found", status=404)
+    pokemons = data.get("results", [])
+
+    all_pokemons = []
+    for pokemon in pokemons:
+        pokemon_url = pokemon['url']
+        try:
+            response_pokemon = requests.get(pokemon_url)
+            response_pokemon.raise_for_status()
+            data_pokemon = response_pokemon.json()
+            name = data_pokemon['name']
+            image_url = data_pokemon['sprites']['front_default']
+            all_pokemons.append({
+                'id' : data_pokemon['id'],
+                'name': name,
+                'image_url': image_url,
+            })
+        except requests.exceptions.RequestException:
+            continue  
         teams = Teams.objects.all()
-        return render(request, 'teams.html', {'teams': teams})
+
+    if request.method == 'GET':
+        return render(request, 'teams.html', {'teams': teams, 'all_pokemons': all_pokemons})
+
     
     if request.method == 'POST':
         name = request.POST.get('name')
+        pokemon_name_1 = request.POST.get('pokemon-name1')
+        pokemon_name_2 = request.POST.get('pokemon-name2')
+        pokemon_name_3 = request.POST.get('pokemon-name3')
+        pokemon_name_4 = request.POST.get('pokemon-name4')
+        pokemon_name_5 = request.POST.get('pokemon-name5')
+        pokemon_name_6 = request.POST.get('pokemon-name6')
         if name:
-            team = Teams.objects.create(name=name)
+            team = Teams.objects.create(
+                name=name, 
+                pokemon_1=pokemon_name_1,
+                pokemon_2=pokemon_name_2,
+                pokemon_3=pokemon_name_3,
+                pokemon_4=pokemon_name_4,
+                pokemon_5=pokemon_name_5,
+                pokemon_6=pokemon_name_6,
+                )
             # team = Teams(name=name)
             team.save()
             messages.success(request, f"Team '{name}' created successfully!")
@@ -27,7 +71,7 @@ def manageTeam(request):
             
             #messages.success(request, f"List of pokemon added successfully!")
             
-            return render(request, 'teams.html', {'teams': Teams.objects.all()})
+            return render(request, 'teams.html', {'teams': Teams.objects.all(), 'all_pokemons': all_pokemons})
         else:
             messages.error(request, "Team could not be created. Name is required.")
             return render(request, 'teams.html')  
