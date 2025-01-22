@@ -124,58 +124,18 @@
             <h2>{{ team.id }}</h2>
             <h2>{{ team.name }}</h2>
             <div>
-              {% for pokemon in all_pokemons %}
-              <div>
-                {% if pokemon.name == team.pokemon_1 %}
-                <img
-                  width="64"
-                  height="64"
-                  src="{{ pokemon.image_url }}"
-                  alt="{{ pokemon.name }}"
-                  class="pokemon-image"
-                />
-                {% endif %} {% if pokemon.name == team.pokemon_2 %}
-                <img
-                  width="64"
-                  height="64"
-                  src="{{ pokemon.image_url }}"
-                  alt="{{ pokemon.name }}"
-                  class="pokemon-image"
-                />
-                {% endif %} {% if pokemon.name == team.pokemon_3 %}
-                <img
-                  width="64"
-                  height="64"
-                  src="{{ pokemon.image_url }}"
-                  alt="{{ pokemon.name }}"
-                  class="pokemon-image"
-                />
-                {% endif %} {% if pokemon.name == team.pokemon_4 %}
-                <img
-                  width="64"
-                  height="64"
-                  src="{{ pokemon.image_url }}"
-                  alt="{{ pokemon.name }}"
-                  class="pokemon-image"
-                />
-                {% endif %} {% if pokemon.name == team.pokemon_5 %}
-                <img
-                  width="64"
-                  height="64"
-                  src="{{ pokemon.image_url }}"
-                  alt="{{ pokemon.name }}"
-                  class="pokemon-image"
-                />
-                {% endif %} {% if pokemon.name == team.pokemon_6 %}
-                <img
-                  width="64"
-                  height="64"
-                  src="{{ pokemon.image_url }}"
-                  alt="{{ pokemon.name }}"
-                  class="pokemon-image"
-                />
-                {% endif %}
-              </div>
+              {% for pokemon_name in team.pokemons %}
+                {% for pokemon in all_pokemons %}
+                  {% if pokemon.name == pokemon_name %}
+                    <img
+                      width="64"
+                      height="64"
+                      src="{{ pokemon.image_url }}"
+                      alt="{{ pokemon.name }}"
+                      class="pokemon-image"
+                    />
+                  {% endif %}
+                {% endfor %}
               {% endfor %}
             </div>
           </div>
@@ -186,7 +146,7 @@
             </button>
             <button
               class="btn-edit"
-              onClick="openEditModal({{ team.id }}, '{{ team.name }}')"
+              onClick="openEditModal({{ team.id }}, '{{ team.name }}', '{{ team.pokemon_1 }}', '{{ team.pokemon_2 }}', '{{ team.pokemon_3 }}', '{{ team.pokemon_4 }}', '{{ team.pokemon_5 }}', '{{ team.pokemon_6 }}')"
             >
               Edit
             </button>
@@ -202,6 +162,97 @@
           <form id="edit-form" onsubmit="updateTeamName(event)">
             <input type="hidden" id="edit-team-id" name="team_id" />
             <input type="text" id="edit-team-name" name="name" required />
+            <div>
+              <input
+                type="text"
+                id="edit-pokemon-1"
+                name="pokemon-name1"
+                list="pokemon-names1"
+                placeholder="Add a Pokemon"
+              />
+              <datalist id="pokemon-names1">
+                {% for pokemon in all_pokemons %}
+                <option value="{{ pokemon.name }}" data-name="{{ pokemon.name }}">
+                  {{ pokemon.name }}
+                </option>
+                {% endfor %}
+              </datalist>
+    
+              <input
+                type="text"
+                id="edit-pokemon-2"
+                name="pokemon-name2"
+                list="pokemon-names2"
+                placeholder="Add a Pokemon"
+              />
+              <datalist id="pokemon-names2">
+                {% for pokemon in all_pokemons %}
+                <option value="{{ pokemon.name }}" data-name="{{ pokemon.name }}">
+                  {{ pokemon.name }}
+                </option>
+                {% endfor %}
+              </datalist>
+              <input
+                type="text"
+                id="edit-pokemon-3"
+                name="pokemon-name3"
+                list="pokemon-names3"
+                placeholder="Add a Pokemon"
+              />
+              <datalist id="pokemon-names3">
+                {% for pokemon in all_pokemons %}
+                <option value="{{ pokemon.name }}" data-name="{{ pokemon.name }}">
+                  {{ pokemon.name }}
+                </option>
+                {% endfor %}
+              </datalist>
+            </div>
+            <div>
+              <input
+                type="text"
+                id="edit-pokemon-4"
+                name="pokemon-name4"
+                list="pokemon-names4"
+                placeholder="Add a Pokemon"
+              />
+              <datalist id="pokemon-names4">
+                {% for pokemon in all_pokemons %}
+                <option value="{{ pokemon.name }}" data-name="{{ pokemon.name }}">
+                  {{ pokemon.name }}
+                </option>
+                {% endfor %}
+              </datalist>
+              <input
+                type="text"
+                id="edit-pokemon-5"
+                name="pokemon-name5"
+                list="pokemon-names5"
+                placeholder="Add a Pokemon"
+              />
+              <datalist id="pokemon-names5">
+                {% for pokemon in all_pokemons %}
+                <option value="{{ pokemon.name }}" data-name="{{ pokemon.name }}">
+                  {{ pokemon.name }}
+                </option>
+                {% endfor %}
+              </datalist>
+              <input
+                type="text"
+                id="edit-pokemon-6"
+                name="pokemon-name6"
+                list="pokemon-names6"
+                placeholder="Add a Pokemon"
+              />
+              <datalist id="pokemon-names6">
+                {% for pokemon in all_pokemons %}
+                <option value="{{ pokemon.name }}" data-name="{{ pokemon.name }}">
+                  {{ pokemon.name }}
+                </option>
+                {% endfor %}
+              </datalist>
+            </div>
+
+
             <button class="btn-save" type="submit">Save Changes</button>
           </form>
         </div>
@@ -250,13 +301,29 @@
           });
       }
 
-      function openEditModal(teamId, teamName) {
+      function openEditModal(teamId, teamName, pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6) {
         const modal = document.getElementById("edit-modal");
         const inputId = document.getElementById("edit-team-id");
         const inputName = document.getElementById("edit-team-name");
+        const inputPokemon1 = document.getElementById("edit-pokemon-1");
+        const inputPokemon2 = document.getElementById("edit-pokemon-2");
+        const inputPokemon3 = document.getElementById("edit-pokemon-3");
+        const inputPokemon4 = document.getElementById("edit-pokemon-4");
+        const inputPokemon5 = document.getElementById("edit-pokemon-5");
+        const inputPokemon6 = document.getElementById("edit-pokemon-6");
 
         inputId.value = teamId;
         inputName.value = teamName;
+        console.log(inputPokemon1)
+        console.log(inputPokemon1.value)
+        inputPokemon1.value = pokemon1
+        console.log(inputPokemon1.value)
+        inputPokemon1.dispatchEvent(new Event('input')); // Dispatch the input event
+        inputPokemon2.value = pokemon2
+        inputPokemon3.value = pokemon3
+        inputPokemon4.value = pokemon4
+        inputPokemon5.value = pokemon5
+        inputPokemon6.value = pokemon6
         modal.classList.remove("hidden");
       }
 
@@ -270,8 +337,12 @@
 
         const teamId = document.getElementById("edit-team-id").value;
         const newName = document.getElementById("edit-team-name").value;
-
-        console.log(teamId, newName, "teamId, newName");
+        const pokemon1 = document.getElementById("edit-pokemon-1").value;
+        const pokemon2 = document.getElementById("edit-pokemon-2").value;
+        const pokemon3 = document.getElementById("edit-pokemon-3").value;
+        const pokemon4 = document.getElementById("edit-pokemon-4").value;
+        const pokemon5 = document.getElementById("edit-pokemon-5").value;
+        const pokemon6 = document.getElementById("edit-pokemon-6").value;
 
         fetch(`/teams`, {
           method: "PUT",
@@ -280,11 +351,21 @@
             "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]")
               .value,
           },
-          body: JSON.stringify({ team_id: teamId, name: newName }),
+          body: JSON.stringify({ 
+            team_id: teamId,
+            name: newName,
+            pokemon_1: pokemon1,
+            pokemon_2: pokemon2,
+            pokemon_3: pokemon3,
+            pokemon_4: pokemon4,
+            pokemon_5: pokemon5,
+            pokemon_6: pokemon6 }),
         })
           .then((response) => {
+            //console.log(response)
             if (!response.ok) {
               return response.json().then((data) => {
+                //console.log(data)
                 throw new Error(
                   data.message || "An unexpected error occurred."
                 );
@@ -293,6 +374,7 @@
             return response.json();
           })
           .then((data) => {
+            //console.log(data)
             alert(data.message);
             closeEditModal();
             window.location.reload(); // Recharge la page pour voir les changements

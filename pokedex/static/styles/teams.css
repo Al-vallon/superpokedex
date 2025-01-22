@@ -21,8 +21,7 @@ body {
 }
 
 .btn:hover {
-  color: #232323;
-  font-weight: bold;
+  outline: 1px solid black;
 }
 
 .btn-edit {
@@ -37,8 +36,7 @@ body {
 }
 
 .btn-edit:hover {
-  color: #232323;
-  font-weight: bold;
+  outline: 1px solid black;
 }
 
 .container {
