@@ -68,7 +68,7 @@ docker-compose up --build
 
 3. Access the application:
 
-Once the container is running, you can access the application by navigating to http://localhost:8000/api/pokemons in your web browser.
+Once the container is running, you can access the application by navigating to http://localhost:8000 in your web browser.
 
 4. Apply database migrations:
 
