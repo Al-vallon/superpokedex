@@ -11,6 +11,10 @@
 <body class="pokemon-body">
     <h1 class="pokemon-name">{{ pokemon.name }}</h1>
     <div style="display:flex;">
+        <a class="pagination-link"
+           href="/api/pokemons"
+        >Back to pokedex</a>
+
         <a class="pagination-link previous-link"
            href="/api/pokemons/{{ pokemon.id|add:-1 }}"
            {% if pokemon.id > 1 %}
