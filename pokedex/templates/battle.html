@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <title>Battle</title>
+    <link rel="stylesheet" href="{% static 'styles/teams.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar"> 
+        <div class="logo">
+          <a href="/api/pokemons">
+            <img src="{% static 'pokedex/logo.png' %}" alt="Logo" />
+          </a>
+        </div>
+        <div class="nav-buttons">
+          <a href="/api/pokemons" class="nav-button">Pokedex</a>
+          <a href="/teams" class="nav-button">Teams</a>
+        </div>
+      </nav>
+      <h1 class="title">Battle</h1>
+
+      <form id="battle-form" class="team-form">
+        {% csrf_token %}
+        <select id="team1" name="team1_id" required>
+          <option value="">Select Team 1</option>
+          {% for team in teams %}
+          <option value="{{ team.id }}">{{ team.name }}</option>
+          {% endfor %}
+        </select>
+        <select id="team2" name="team2_id" required>
+          <option value="">Select Team 2</option>
+          {% for team in teams %}
+          <option value="{{ team.id }}">{{ team.name }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit">Start Battle</button>
+      </form>
+
+      <div id="battle-result" class="messages"></div>
+    </div>
+
+    <script>
+      document.getElementById("battle-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const team1Id = document.getElementById("team1").value;
+        const team2Id = document.getElementById("team2").value;
+
+        fetch(`/api/battle`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+          },
+          body: JSON.stringify({ team1_id: team1Id, team2_id: team2Id }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const resultDiv = document.getElementById("battle-result");
+            resultDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            const resultDiv = document.getElementById("battle-result");
+            resultDiv.innerHTML = `<div class="alert alert-error">An unexpected error occurred.</div>`;
+          });
+      });
+    </script>
+  </body>
+</html>

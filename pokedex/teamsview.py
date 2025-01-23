@@ -130,3 +130,77 @@ def manageTeam(request):
 
 
     return HttpResponse(status=405)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def battle(request):
+    try:
+        data = json.loads(request.body)
+        team1_id = data.get('team1_id')
+        team2_id = data.get('team2_id')
+
+        if not team1_id or not team2_id:
+            return JsonResponse({'message': "Both team IDs are required."}, status=400)
+
+        team1 = Teams.objects.get(id=team1_id)
+        team2 = Teams.objects.get(id=team2_id)
+
+        def get_pokemon_hp(pokemon_name):
+            if not pokemon_name:
+                return 0
+            response = requests.get(f"{API_URL}/{pokemon_name}")
+            if response.status_code == 200:
+                data = response.json()
+                return data['stats'][0]['base_stat']
+            return 0
+
+        team1_hp = sum(get_pokemon_hp(pokemon) for pokemon in [team1.pokemon_1, team1.pokemon_2, team1.pokemon_3, team1.pokemon_4, team1.pokemon_5, team1.pokemon_6])
+        team2_hp = sum(get_pokemon_hp(pokemon) for pokemon in [team2.pokemon_1, team2.pokemon_2, team2.pokemon_3, team2.pokemon_4, team2.pokemon_5, team2.pokemon_6])
+
+        if team1_hp > team2_hp:
+            winner = team1.name
+        else:
+            winner = team2.name
+
+        return JsonResponse({'message': f"The winner is {winner}!"}, status=200)
+    except json.JSONDecodeError:
+        return JsonResponse({'message': "Invalid JSON data."}, status=400)
+    except Teams.DoesNotExist:
+        return JsonResponse({'message': "One or both teams not found."}, status=404)
+
+@csrf_exempt
+@require_http_methods(["GET", "POST"])
+def battle_page(request):
+    if request.method == 'GET':
+        teams = Teams.objects.all()
+        return render(request, 'battle.html', {'teams': teams})
+
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        team1_id = data.get('team1_id')
+        team2_id = data.get('team2_id')
+
+        if not team1_id or not team2_id:
+            return JsonResponse({'message': "Both team IDs are required."}, status=400)
+
+        team1 = Teams.objects.get(id=team1_id)
+        team2 = Teams.objects.get(id=team2_id)
+
+        def get_pokemon_hp(pokemon_name):
+            if not pokemon_name:
+                return 0
+            response = requests.get(f"{API_URL}/{pokemon_name}")
+            if response.status_code == 200:
+                data = response.json()
+                return data['stats'][0]['base_stat']
+            return 0
+
+        team1_hp = sum(get_pokemon_hp(pokemon) for pokemon in [team1.pokemon_1, team1.pokemon_2, team1.pokemon_3, team1.pokemon_4, team1.pokemon_5, team1.pokemon_6])
+        team2_hp = sum(get_pokemon_hp(pokemon) for pokemon in [team2.pokemon_1, team2.pokemon_2, team2.pokemon_3, team2.pokemon_4, team2.pokemon_5, team2.pokemon_6])
+
+        if team1_hp > team2_hp:
+            winner = team1.name
+        else:
+            winner = team2.name
+
+        return JsonResponse({'message': f"The winner is {winner}!"}, status=200)
